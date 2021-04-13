@@ -1,0 +1,10 @@
+base-config base-config/intro note
+base-config base-config/login note
+
+d-i finish-install/reboot_in_progress note
+
+d-i preseed/early_command string anna-install simple-cdd-profiles
+
+simple-cdd simple-cdd/profiles multiselect buster
+
+tasksel tasksel/first multiselect

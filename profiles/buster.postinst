@@ -1,0 +1,692 @@
+#!/bin/sh
+
+echo "kernel.sysrq = 1"  >> /etc/sysctl.conf
+echo "vm.swappiness = 10" >> /etc/sysctl.conf
+
+# Geany
+mkdir -p /etc/skel/.config/geany
+cat > /etc/skel/.config/geany/geany.conf << EOF
+[geany]
+auto_close_xml_tags=false
+auto_complete_symbols=false
+auto_continue_multiline=false
+beep_on_errors=false
+color_scheme=dark.conf
+complete_snippets=false
+editor_font=Monospace 9
+indent_mode=0
+line_break_column=80
+long_line_column=80
+msgwin_font=Monospace 8
+msgwindow_visible=false
+pref_editor_tab_width=8
+pref_main_load_session=false
+pref_main_save_winpos=false
+pref_main_search_use_current_word=false
+tagbar_font=Sans 8
+use_tab_to_indent=false
+
+[plugins]
+load_plugins=false
+
+[VTE]
+load_vte=false
+EOF
+
+mkdir -p /etc/skel/.config/geany/filedefs
+cat > /etc/skel/.config/geany/filedefs/filetypes.common << EOF
+[styling]
+line_height=0;2;
+EOF
+
+mkdir -p /etc/skel/.config/geany/colorschemes
+cat > /etc/skel/.config/geany/colorschemes/dark.conf << EOF
+[theme_info]
+name=Dark Scheme
+description=Dark background
+version=2020
+compat=1.22;1.23;1.23.1;1.24
+
+[named_styles]
+default=#fff;#000;false;false
+error=#ff80c0;#000;false;false
+
+# Editor styles
+selection=#f00;#404040;false;true
+current_line=#8dc63f;#330;true;false
+brace_good=#ff0;#000;true;false
+brace_bad=#c5360f;#000;true;false
+margin_line_number=#b2aeab;#404040;false;false
+margin_folding=#222;#111;false;false
+fold_symbol_highlight=#fff
+indent_guide=#066;;false;false
+caret=#fff;#066;false;false
+marker_line=#ff208c;#80d4b2;false;false
+marker_search=#ff0;#f00;false;false
+marker_mark=#810000;#000;false;false
+call_tips=#ccc;#fff;false;false
+white_space=#ccc;;true
+
+# Programming languages
+comment=#f00
+comment_doc=#f00;#070707;false;false
+comment_line=comment
+comment_line_doc=comment_doc
+comment_doc_keyword=comment_doc,bold
+comment_doc_keyword_error=comment_doc,italic
+
+number=#28a8b4
+number_1=number
+number_2=number_1
+
+type=#fff;;true;false
+class=type
+function=default
+parameter=function
+
+keyword=#f80;;true;false
+keyword_1=keyword
+keyword_2=#6f0;;true;false
+keyword_3=keyword_1
+keyword_4=keyword_1
+
+identifier=default
+identifier_1=identifier
+identifier_2=identifier_1
+identifier_3=identifier_1
+identifier_4=identifier_1
+
+string=#ffcd8b;#404040
+string_1=string
+string_2=string_1
+string_3=default
+string_4=default
+string_eol=#8dc63f;#000;false;false
+character=string_1
+backticks=string_2
+here_doc=string_2
+
+scalar=string_2
+label=default,bold
+preprocessor=#fff
+regex=number_1
+operator=#fc0
+decorator=string_1,bold
+other=default
+
+# Markup-type languages
+tag=#6f0;#000;false;false
+tag_unknown=#ccc;#000;false;false
+tag_end=#fff;#000;false;false
+attribute=#bd96bd;#000;false;false
+attribute_unknown=#fff;#000;false;false
+value=#6f0;#000;false;false
+entity=#fff;#000;false;false
+
+# Diff
+line_added=#00f5ff;#000;false;false
+line_removed=#ff0;#000;false;false
+line_changed=#399;#000;false;false
+EOF
+
+# GTK 2.0
+cat > /etc/skel/.gtkrc-2.0 << EOF
+gtk-theme-name = "Adwaita-dark"
+gtk-icon-theme-name = "Papirus-Dark"
+gtk-font-name = "Sans 9"
+gtk-button-images = 1
+gtk-menu-images = 1
+gtk-toolbar-style = GTK_TOOLBAR_BOTH_HORIZ
+EOF
+
+# GTK 3.0
+mkdir -p /etc/skel/.config/gtk-3.0
+cat > /etc/skel/.config/gtk-3.0/settings.ini << EOF
+[Settings]
+gtk-theme-name = Adwaita-dark
+gtk-icon-theme-name = Papirus-Dark
+gtk-font-name = Sans 9
+gtk-menu-images = 1
+gtk-button-images = 1
+gtk-toolbar-style = GTK_TOOLBAR_BOTH_HORIZ
+EOF
+
+# LXQt
+rm /etc/xdg/autostart/lxqt-notifications.desktop
+rm /etc/xdg/autostart/lxqt-powermanagement.desktop
+mkdir -p /etc/skel/.config/lxqt
+
+cat > /etc/skel/.config/lxqt/lxqt.conf << EOF
+[General]
+__userfile__=true
+icon_theme=Papirus-Dark
+
+[Qt]
+font="Sans,9,-1,5,50,0,0,0,0,0"
+style=Adwaita-Dark
+EOF
+
+cat > /etc/skel/.config/lxqt/lxqt-config-appearance.conf << EOF
+[General]
+__userfile__=true
+ControlGTKThemeEnabled=true
+EOF
+
+cat > /etc/skel/.config/lxqt/panel.conf << EOF
+[General]
+__userfile__=true
+iconTheme=Papirus-Dark
+
+[cpuload]
+alignment=Right
+type=cpuload
+
+[kbindicator]
+alignment=Right
+keeper_type=global
+show_caps_lock=false
+show_layout=true
+show_num_lock=false
+show_scroll_lock=false
+type=kbindicator
+
+[mainmenu]
+alignment=Left
+icon=/usr/share/icons/Papirus/64x64/apps/chromium-app-list.svg
+ownIcon=true
+type=mainmenu
+
+[panel1]
+alignment=-1
+animation-duration=0
+background-color=@Variant(\0\0\0\x43\x1\xff\xff\0\0\0\0\0\0\0\0)
+background-image=
+desktop=0
+font-color=@Variant(\0\0\0\x43\0\xff\xff\0\0\0\0\0\0\0\0)
+hidable=false
+iconSize=22
+lineCount=1
+lockPanel=false
+opacity=25
+panelSize=32
+plugins=mainmenu, quicklaunch, showdesktop, taskbar, tray, kbindicator, cpuload, volume, worldclock, quicklaunch2
+position=Bottom
+reserve-space=true
+show-delay=0
+visible-margin=true
+width=100
+width-percent=true
+
+[quicklaunch]
+alignment=Left
+apps\1\desktop=/usr/share/applications/pcmanfm-qt.desktop
+apps\2\desktop=/usr/share/applications/qterminal.desktop
+apps\3\desktop=/usr/share/applications/geany.desktop
+apps\4\desktop=/usr/share/applications/firefox-esr.desktop
+apps\size=4
+type=quicklaunch
+
+[quicklaunch2]
+alignment=Left
+type=quicklaunch
+
+[showdesktop]
+alignment=Right
+type=showdesktop
+
+[taskbar]
+alignment=Left
+type=taskbar
+
+[tray]
+alignment=Right
+type=tray
+
+[volume]
+alignment=Right
+type=volume
+
+[worldclock]
+alignment=Right
+type=worldclock
+EOF
+
+cat > /etc/skel/.config/lxqt/session.conf << EOF
+[General]
+__userfile__=true
+leave_confirmation=false
+lock_screen_before_power_actions=false
+window_manager=xfwm4
+
+[Keyboard]
+layout="us"
+model=pc105
+variant=",,"
+EOF
+
+# lxqt-config-appearance
+mkdir -p /etc/skel/.config/fontconfig
+cat > /etc/skel/.config/fontconfig/fonts.conf << EOF
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <include ignore_missing="yes">conf.d</include>
+  <match target="font">
+    <edit name="antialias" mode="assign">
+      <bool>true</bool>
+    </edit>
+  </match>
+  <match target="font">
+    <edit name="rgba" mode="assign">
+      <const>none</const>
+    </edit>
+  </match>
+  <match target="font">
+    <edit name="lcdfilter" mode="assign">
+      <const>lcddefault</const>
+    </edit>
+  </match>
+  <match target="font">
+    <edit name="hinting" mode="assign">
+      <bool>true</bool>
+    </edit>
+  </match>
+  <match target="font">
+    <edit name="hintstyle" mode="assign">
+      <const>hintfull</const>
+    </edit>
+  </match>
+  <match target="font">
+    <edit name="autohint" mode="assign">
+      <bool>true</bool>
+    </edit>
+  </match>
+  <match target="pattern">
+    <edit name="dpi" mode="assign">
+      <double>96</double>
+    </edit>
+  </match>
+</fontconfig>
+EOF
+
+# MIMEApps
+cat > /etc/skel/.config/mimeapps.list << EOF
+[Default Applications]
+audio/mpeg=audacious.desktop;
+application/pdf=qpdfview.desktop;
+text/plain=geany.desktop;
+application/x-shellscript=geany.desktop
+application/octet-stream=geany.desktop;
+image/bmp=lximage-qt.desktop
+image/jpeg=lximage-qt.desktop;
+image/png=lximage-qt.desktop;
+video/mp4=vlc.desktop
+application/xspf+xml=vlc.desktop
+application/x-cd-image=org.gnome.FileRoller.desktop;
+application/x-raw-disk-image=org.gnome.FileRoller.desktop;
+application/x-bzip-compressed-tar=org.gnome.FileRoller.desktop;
+application/x-compressed-tar=org.gnome.FileRoller.desktop
+application/x-xz-compressed-tar=org.gnome.FileRoller.desktop;
+application/zip=org.gnome.FileRoller.desktop;
+application/x-7z-compressed=org.gnome.FileRoller.desktop
+application/x-archive=org.gnome.FileRoller.desktop
+application/x-bzip=org.gnome.FileRoller.desktop
+application/vnd.comicbook+zip=org.gnome.FileRoller.desktop
+application/x-cpio=org.gnome.FileRoller.desktop
+application/x-ms-dos-executable=org.gnome.FileRoller.desktop
+application/gzip=org.gnome.FileRoller.desktop
+application/x-lzma=org.gnome.FileRoller.desktop
+application/x-tar=org.gnome.FileRoller.desktop
+application/x-tarz=org.gnome.FileRoller.desktop
+application/x-lzip-compressed-tar=org.gnome.FileRoller.desktop
+application/x-tzo=org.gnome.FileRoller.desktop;
+application/x-xz=org.gnome.FileRoller.desktop
+application/vnd.rar=org.gnome.FileRoller.desktop
+EOF
+
+# pcmanfm-qt
+mkdir -p /etc/skel/.config/pcmanfm-qt/lxqt
+cat > /etc/skel/.config/pcmanfm-qt/lxqt/settings.conf << EOF
+[Behavior]
+AutoSelectionDelay=600
+BookmarkOpenMethod=current_tab
+ConfirmDelete=true
+ConfirmTrash=false
+NoUsbTrash=false
+QuickExec=false
+SelectNewFiles=false
+SingleClick=false
+UseTrash=true
+
+[Desktop]
+BgColor=#082a64
+DesktopCellMargins=@Size(3 1)
+DesktopIconSize=48
+DesktopShortcuts=@Invalid()
+FgColor=#ffffff
+Font="DejaVu Sans,10,-1,5,50,0,0,0,0,0,Book"
+HideItems=false
+LastSlide=
+ShadowColor=#000000
+ShowHidden=false
+ShowWmMenu=false
+SlideShowInterval=0
+SortColumn=name
+SortFolderFirst=true
+SortOrder=ascending
+Wallpaper=
+WallpaperDirectory=
+WallpaperMode=none
+WallpaperRandomize=false
+
+[FolderView]
+BackupAsHidden=false
+BigIconSize=48
+CustomColumnWidths=@Invalid()
+FolderViewCellMargins=@Size(3 3)
+HiddenColumns=@Invalid()
+Mode=detailed
+ShadowHidden=false
+ShowFilter=false
+ShowFullNames=false
+ShowHidden=false
+SidePaneIconSize=24
+SmallIconSize=24
+SortCaseSensitive=false
+SortColumn=name
+SortFolderFirst=true
+SortOrder=ascending
+ThumbnailIconSize=128
+
+[Places]
+PlacesApplications=true
+PlacesComputer=true
+PlacesDesktop=true
+PlacesHome=true
+PlacesNetwork=false
+PlacesRoot=true
+PlacesTrash=true
+
+[Search]
+searchContentCaseInsensitive=true
+searchContentRegexp=true
+searchNameCaseInsensitive=true
+searchNameRegexp=true
+searchRecursive=true
+searchhHidden=true
+
+[System]
+Archiver=file-roller
+FallbackIconThemeName=oxygen
+OnlyUserTemplates=false
+SIUnit=false
+SuCommand=lxsudo dbus-run-session -- %s
+TemplateRunApp=false
+TemplateTypeOnce=false
+Terminal=qterminal
+
+[Thumbnail]
+MaxThumbnailFileSize=0
+ShowThumbnails=false
+ThumbnailLocalFilesOnly=true
+
+[Volume]
+AutoRun=false
+CloseOnUnmount=true
+MountOnStartup=true
+MountRemovable=true
+
+[Window]
+AlwaysShowTabs=false
+FixedHeight=480
+FixedWidth=640
+LastWindowHeight=480
+LastWindowMaximized=false
+LastWindowWidth=640
+PathBarButtons=true
+RememberWindowSize=true
+ShowMenuBar=true
+ShowTabClose=true
+SidePaneMode=places
+SplitView=false
+SplitterPos=150
+EOF
+
+# qterminal
+mkdir -p /etc/skel/.config/qterminal.org
+cat > /etc/skel/.config/qterminal.org/qterminal.ini << EOF
+[General]
+AskOnExit=false
+BookmarksFile=
+BookmarksVisible=true
+Borderless=false
+ChangeWindowIcon=true
+ChangeWindowTitle=true
+ConfirmMultilinePaste=false
+FixedTabWidth=false
+FixedTabWidthValue=500
+HideTabBarWithOneTab=true
+HistoryLimited=false
+HistoryLimitedTo=1000
+KeyboardCursorShape=0
+LastWindowMaximized=false
+MenuVisible=true
+MotionAfterPaste=0
+SavePosOnExit=true
+SaveSizeOnExit=true
+ScrollbarPosition=2
+ShowCloseTabButton=true
+TabBarless=false
+TabsPosition=0
+Term=xterm-256color
+TerminalBackgroundImage=
+TerminalMargin=4
+TerminalTransparency=0
+TerminalsPreset=0
+TrimPastedTrailingNewlines=false
+UseBookmarks=false
+UseCWD=false
+colorScheme=WhiteOnBlack
+emulation=default
+enabledBidiSupport=true
+fontFamily=DejaVu Sans Mono
+fontSize=9
+guiStyle=
+highlightCurrentTerminal=true
+showTerminalSizeHint=true
+
+[DropMode]
+Height=45
+KeepOpen=false
+ShortCut=F12
+ShowOnStart=true
+Width=70
+
+[MainWindow]
+ApplicationTransparency=0
+isMaximized=false
+
+[Sessions]
+size=0
+
+[Shortcuts]
+Add%20Tab=Ctrl+Shift+T
+Bottom%20Subterminal=Alt+Down
+Clear%20Active%20Terminal=Ctrl+Shift+X
+Close%20Tab=Ctrl+Shift+W
+Collapse%20Subterminal=
+Copy%20Selection=Ctrl+Shift+C
+Find=Ctrl+Shift+F
+Fullscreen=F11
+Hide%20Window%20Borders=
+Left%20Subterminal=Alt+Left
+Move%20Tab%20Left=Alt+Shift+Left|Ctrl+Shift+PgUp
+Move%20Tab%20Right=Alt+Shift+Right|Ctrl+Shift+PgDown
+New%20Window=Ctrl+Shift+N
+Next%20Tab=Ctrl+PgDown
+Next%20Tab%20in%20History=Ctrl+Shift+Tab
+Paste%20Clipboard=Ctrl+Shift+V
+Paste%20Selection=Shift+Ins
+Preferences...=
+Previous%20Tab=Ctrl+PgUp
+Previous%20Tab%20in%20History=Ctrl+Tab
+Quit=
+Rename%20Session=Alt+Shift+S
+Right%20Subterminal=Alt+Right
+Show%20Tab%20Bar=
+Split%20Terminal%20Horizontally=
+Split%20Terminal%20Vertically=
+Toggle%20Bookmarks=Ctrl+Shift+B
+Toggle%20Menu=Ctrl+Shift+M
+Top%20Subterminal=Alt+Up
+Zoom%20in=Ctrl++
+Zoom%20out=Ctrl+-
+Zoom%20reset=Ctrl+0
+EOF
+
+# Systemd
+systemctl disable systemd-timesyncd
+
+# XFCE4
+mkdir -p /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
+
+cat > /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-power-manager" version="1.0">
+  <property name="xfce4-power-manager" type="empty">
+    <property name="power-button-action" type="uint" value="4"/>
+    <property name="brightness-switch-restore-on-exit" type="int" value="1"/>
+    <property name="brightness-switch" type="int" value="0"/>
+    <property name="show-tray-icon" type="bool" value="false"/>
+    <property name="lid-action-on-battery" type="uint" value="0"/>
+    <property name="logind-handle-lid-switch" type="bool" value="false"/>
+    <property name="lid-action-on-ac" type="uint" value="0"/>
+    <property name="handle-brightness-keys" type="bool" value="true"/>
+    <property name="inactivity-sleep-mode-on-battery" type="uint" value="1"/>
+    <property name="critical-power-action" type="uint" value="4"/>
+    <property name="lock-screen-suspend-hibernate" type="bool" value="false"/>
+    <property name="brightness-on-battery" type="uint" value="9"/>
+    <property name="brightness-on-ac" type="uint" value="9"/>
+    <property name="blank-on-battery" type="int" value="0"/>
+    <property name="blank-on-ac" type="int" value="0"/>
+    <property name="dpms-on-ac-sleep" type="uint" value="0"/>
+    <property name="dpms-on-battery-sleep" type="uint" value="0"/>
+    <property name="dpms-on-ac-off" type="uint" value="30"/>
+    <property name="brightness-level-on-ac" type="uint" value="40"/>
+    <property name="brightness-level-on-battery" type="uint" value="40"/>
+  </property>
+</channel>
+EOF
+
+sed -i 's/;LXQt//g' /etc/xdg/autostart/xfce4-power-manager.desktop
+
+cat > /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfwm4" version="1.0">
+  <property name="general" type="empty">
+    <property name="theme" type="string" value="Default-hdpi"/>
+    <property name="repeat_urgent_blink" type="bool" value="false"/>
+    <property name="show_dock_shadow" type="empty"/>
+    <property name="urgent_blink" type="bool" value="false"/>
+    <property name="workspace_count" type="int" value="1"/>
+    <property name="activate_action" type="string" value="bring"/>
+    <property name="borderless_maximize" type="bool" value="true"/>
+    <property name="box_move" type="bool" value="false"/>
+    <property name="box_resize" type="bool" value="false"/>
+    <property name="button_layout" type="string" value="O|HMC"/>
+    <property name="button_offset" type="int" value="0"/>
+    <property name="button_spacing" type="int" value="0"/>
+    <property name="click_to_focus" type="bool" value="true"/>
+    <property name="cycle_apps_only" type="bool" value="false"/>
+    <property name="cycle_draw_frame" type="bool" value="true"/>
+    <property name="cycle_raise" type="bool" value="false"/>
+    <property name="cycle_hidden" type="bool" value="true"/>
+    <property name="cycle_minimum" type="bool" value="true"/>
+    <property name="cycle_preview" type="bool" value="true"/>
+    <property name="cycle_tabwin_mode" type="int" value="0"/>
+    <property name="cycle_workspaces" type="bool" value="false"/>
+    <property name="double_click_action" type="string" value="maximize"/>
+    <property name="double_click_distance" type="int" value="5"/>
+    <property name="double_click_time" type="int" value="250"/>
+    <property name="easy_click" type="string" value="Alt"/>
+    <property name="focus_delay" type="int" value="250"/>
+    <property name="focus_hint" type="bool" value="true"/>
+    <property name="focus_new" type="bool" value="true"/>
+    <property name="frame_opacity" type="int" value="100"/>
+    <property name="frame_border_top" type="int" value="0"/>
+    <property name="full_width_title" type="bool" value="true"/>
+    <property name="horiz_scroll_opacity" type="bool" value="false"/>
+    <property name="inactive_opacity" type="int" value="100"/>
+    <property name="maximized_offset" type="int" value="0"/>
+    <property name="mousewheel_rollup" type="bool" value="false"/>
+    <property name="move_opacity" type="int" value="100"/>
+    <property name="placement_mode" type="string" value="center"/>
+    <property name="placement_ratio" type="int" value="20"/>
+    <property name="popup_opacity" type="int" value="100"/>
+    <property name="prevent_focus_stealing" type="bool" value="false"/>
+    <property name="raise_delay" type="int" value="250"/>
+    <property name="raise_on_click" type="bool" value="true"/>
+    <property name="raise_on_focus" type="bool" value="false"/>
+    <property name="raise_with_any_button" type="bool" value="true"/>
+    <property name="resize_opacity" type="int" value="100"/>
+    <property name="scroll_workspaces" type="bool" value="false"/>
+    <property name="shadow_delta_height" type="int" value="0"/>
+    <property name="shadow_delta_width" type="int" value="0"/>
+    <property name="shadow_delta_x" type="int" value="0"/>
+    <property name="shadow_delta_y" type="int" value="-3"/>
+    <property name="shadow_opacity" type="int" value="50"/>
+    <property name="show_app_icon" type="bool" value="false"/>
+    <property name="show_frame_shadow" type="bool" value="false"/>
+    <property name="show_popup_shadow" type="bool" value="false"/>
+    <property name="snap_resist" type="bool" value="false"/>
+    <property name="snap_to_border" type="bool" value="true"/>
+    <property name="snap_to_windows" type="bool" value="false"/>
+    <property name="snap_width" type="int" value="10"/>
+    <property name="vblank_mode" type="string" value="auto"/>
+    <property name="tile_on_move" type="bool" value="true"/>
+    <property name="title_alignment" type="string" value="center"/>
+    <property name="title_font" type="string" value="Sans Bold 9"/>
+    <property name="title_horizontal_offset" type="int" value="0"/>
+    <property name="titleless_maximize" type="bool" value="false"/>
+    <property name="title_shadow_active" type="string" value="false"/>
+    <property name="title_shadow_inactive" type="string" value="false"/>
+    <property name="title_vertical_offset_active" type="int" value="0"/>
+    <property name="title_vertical_offset_inactive" type="int" value="0"/>
+    <property name="toggle_workspaces" type="bool" value="false"/>
+    <property name="unredirect_overlays" type="bool" value="true"/>
+    <property name="use_compositing" type="bool" value="true"/>
+    <property name="wrap_cycle" type="bool" value="true"/>
+    <property name="wrap_layout" type="bool" value="true"/>
+    <property name="wrap_resistance" type="int" value="10"/>
+    <property name="wrap_windows" type="bool" value="true"/>
+    <property name="wrap_workspaces" type="bool" value="false"/>
+    <property name="zoom_desktop" type="bool" value="true"/>
+  </property>
+</channel>
+EOF
+
+# Copy config files
+HOME_USER=/home/*?
+if [ -d ${HOME_USER} ] 
+then
+    USER_NAME=$(basename ${HOME_USER})
+    cp -r /etc/skel/.config ${HOME_USER}
+    cp /etc/skel/.gtkrc-2.0 ${HOME_USER}
+    chown -R ${USER_NAME}:${USER_NAME} ${HOME_USER}
+else
+    echo "No Users"
+fi
+
+# Copy sources list
+cat > /etc/apt/sources.list << EOF
+deb http://deb.debian.org/debian/ buster main non-free contrib
+# deb-src http://deb.debian.org/debian/ buster main non-free contrib
+
+deb http://security.debian.org/debian-security buster/updates main contrib non-free
+# deb-src http://security.debian.org/debian-security buster/updates main contrib non-free
+
+deb http://deb.debian.org/debian/ buster-updates main contrib non-free
+# deb-src http://deb.debian.org/debian/ buster-updates main contrib non-free
+EOF
